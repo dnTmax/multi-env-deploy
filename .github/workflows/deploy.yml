@@ -39,7 +39,7 @@ jobs:
 
           echo "Placeholders replaced"
 
-      - name: Deploy to EC2 via SSH
+      - name: Deploy to EC2 via SSHH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
