@@ -54,7 +54,22 @@ jobs:
           printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
 
-          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
+          #ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
+          
+          echo "Checking SSH key format..."
+
+          if [ ! -s ~/.ssh/deploy_key ]; then
+            echo "ERROR: SSH key is empty"
+            exit 1
+          fi
+
+          if ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null; then
+            echo "SSH key format is valid"
+          else
+            echo "ERROR: SSH key is invalid or has an unsupported format"
+          exit 1
+          fi
+
 
           ssh-keyscan -T 10 -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
 
