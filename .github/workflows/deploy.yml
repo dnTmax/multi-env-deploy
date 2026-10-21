@@ -59,7 +59,7 @@ jobs:
           echo "OK: key is valid"
 
           
-          
+      
          
           echo "2. Scanning EC2 host..."
           
