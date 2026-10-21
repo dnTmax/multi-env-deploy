@@ -62,6 +62,14 @@ jobs:
           
          
           echo "2. Scanning EC2 host..."
+          
+          echo "Testing TCP port 22..."
+          if timeout 5 bash -c '</dev/tcp/'"$DEPLOY_HOST"'/22' 2>/dev/null; then
+            echo "TCP port 22 is reachable"
+          else
+            echo "TCP port 22 is NOT reachable"
+          fi
+
 
           ssh-keyscan -v -T 10 -H "$DEPLOY_HOST" \
             >> ~/.ssh/known_hosts 2> /tmp/keyscan-error.txt || true
