@@ -60,7 +60,7 @@ jobs:
 
           
           
-     e    
+         
           echo "2. Scanning EC2 host..."
 
           ssh-keyscan -v -T 10 -H "$DEPLOY_HOST" \
