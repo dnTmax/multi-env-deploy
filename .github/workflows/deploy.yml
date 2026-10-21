@@ -58,9 +58,20 @@ jobs:
           ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
           echo "OK: key is valid"
 
+          
+          
           echo "2. Scanning EC2 host..."
-          ssh-keyscan -T 10 -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>&1
-          echo "OK: host scanned"
+
+          if ssh-keyscan -T 10 -H "$DEPLOY_HOST" \
+            >> ~/.ssh/known_hosts 2> /tmp/keyscan-error.txt; then
+            echo "OK: host scanned"
+          else
+            echo "ERROR: ssh-keyscan failed"
+            cat /tmp/keyscan-error.txt
+            exit 1
+          fi
+
+
 
           echo "3. Testing SSH connection..."
           ssh -v -i ~/.ssh/deploy_key \
